@@ -54,6 +54,8 @@ group :development, :test do
   gem "dotenv-rails", "~> 2.8"
 
   gem "rspec-rails"
+
+  gem "capybara"
 end
 
 group :development do
