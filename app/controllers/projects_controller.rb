@@ -3,7 +3,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    binding.b
     @projects = Project.all
   end
 
