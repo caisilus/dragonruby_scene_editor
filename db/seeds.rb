@@ -7,3 +7,9 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+unless Project.any?
+  Project.create(name: "Project 1", create_scene_manager: true)
+  Project.create(name: "Project 2", create_scene_manager: false)
+  Project.create(name: "Project 3")
+end
