@@ -6,9 +6,8 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
-  # GET /projects/1
-  def show
-  end
+  # GET /projects/1 or /projects/1.json
+  def show; end
 
   # GET /projects/new
   def new

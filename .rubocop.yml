@@ -1,0 +1,29 @@
+require: 
+  - rubocop-rails
+  - rubocop-capybara
+  - rubocop-rspec
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/RedundantFetchBlock:
+  Exclude:
+    - 'config/puma.rb'
+
+Naming/PredicateName:
+  ForbiddenPrefixes: ["is_"]
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/*.rb'
+    - 'config/environments/*.rb'
+
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/features/*.rb'
