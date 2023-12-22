@@ -1,4 +1,5 @@
 <p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag "modal" %>
 
 <div class="px-4 sm:px-6 lg:px-8">
   <div class="border-gray-200 bg-white py-5">
@@ -10,7 +11,8 @@
         <%= button_to "Create new project", new_project_path, type: "button", method: :get,
                       class: "relative inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm
                               font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline
-                              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"%>
+                              focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600",
+                      data: { turbo_frame: "modal" } %>
       </div>
     </div>
   </div>
@@ -18,23 +20,25 @@
   <div class="mt-4 flow-root">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead>
-              <tr>
-                <%= table_header("Name", first: true) %>
-                <%= table_header("Updated") %>
-                <%= table_header("Contributors") %>
-                <th scope="col" class="relative py-3.5 pl-3 pr-0">
-                  <span class="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              <% @projects.each do |project |%>
-                <%= render project %>
-              <% end %>
-            </tbody>
-          </table>
+          <%= turbo_frame_tag "projects" do %>
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  <%= table_header("Name", first: true) %>
+                  <%= table_header("Updated") %>
+                  <%= table_header("Contributors") %>
+                  <th scope="col" class="relative py-3.5 pl-3 pr-0">
+                    <span class="sr-only">Edit</span>
+                  </th>
+                </tr>
+              </thead>
+                <tbody id="projects_tbody" class="divide-y divide-gray-200 bg-white">
+                    <% @projects.each do |project |%>
+                      <%= render project %>
+                    <% end %>
+                </tbody>
+            </table>
+          <% end %>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects
   def index
-    @projects = Project.all
+    @projects = Project.order('created_at desc')
   end
 
   # GET /projects/1 or /projects/1.json
@@ -22,11 +22,10 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
 
-    if @project.save
-      return redirect_to project_url(@project), notice: "Project was successfully created."
-    end
+    saved = @project.save
+    return render :new, status: :unprocessable_entity unless saved
 
-    render :new, status: :unprocessable_entity
+    redirect_to projects_url, notice: "Project was successfully created."
   end
 
   # PATCH/PUT /projects/1
@@ -42,7 +41,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy!
 
-    redirect_to projects_url, notice: "Project was successfully destroyed."
+    redirect_to projects_url, notice: "Project was successfully deleted."
   end
 
   private
