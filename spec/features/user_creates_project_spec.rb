@@ -5,7 +5,7 @@ RSpec.describe "User creates project", type: :feature do
     project_name = "My first project"
 
     visit root_path
-    click_on "New Project"
+    click_on "Create new project"
     fill_in "project_name", with: project_name
     click_on "Create"
 
