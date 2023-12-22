@@ -56,6 +56,8 @@ group :development, :test do
   gem "rspec-rails"
 
   gem "capybara"
+
+  gem "factory_bot_rails", "~> 6.4"
 end
 
 group :development do
@@ -69,5 +71,3 @@ group :development do
   # gem "spring"
 
 end
-
-

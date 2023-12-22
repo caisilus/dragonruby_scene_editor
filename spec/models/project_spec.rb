@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "abbreviation method" do
+    it "returns capitalized first letter if there is only one word in project name" do
+      expect(true).to be(false)
+    end
+  end
 end
