@@ -1,0 +1,20 @@
+  <tr id="<%= dom_id project %>" class="hover:bg-gray-100" data-controller="table-row"
+      data-action="click->table-row#click" data-table-row-href-value=<%= edit_project_path(project) %>>
+    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+      <%= project.name %>
+    </td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+      <%= project.updated_at %>
+    </td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+      Member
+    </td>
+    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
+      <%= button_to project_path(project.id), class: "font-bold text-red-600 hover:text-red-900",
+                  method: :delete, data: { action: "table-row#innerButtonClick",
+                                           turbo_frame: "projects" } do %>
+        Delete
+        <span class="sr-only">, <%= project.name %></span>
+      <% end %>
+    </td>
+  </tr>
