@@ -12,3 +12,6 @@ application.register("modal", ModalController)
 
 import TableRowController from "./table_row_controller"
 application.register("table-row", TableRowController)
+
+import VueController from "./vue_controller"
+application.register("vue", VueController)
