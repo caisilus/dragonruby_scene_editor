@@ -1,7 +1,8 @@
 <script setup>
     import { ref, reactive, onMounted } from "vue";
     import DraggableNode from "./DraggableNode.vue";
-import Inspector from "./Inspector.vue";
+    import Inspector from "./Inspector.vue";
+    import Hierarchy from "./Hierarchy.vue";
 
     const configStage = ref({
         width: 500,
@@ -32,8 +33,8 @@ import Inspector from "./Inspector.vue";
         name: "Blue box"
     });
 
-    const draggableConfigs = [configBox, configBox2];
-    draggableConfigs.forEach((config, index) => config.value.id = index);
+    const draggableConfigs = ref([configBox, configBox2]);
+    draggableConfigs.value.forEach((config, index) => config.value.id = `config${index}`);
 
     const selectedBoxConfig = reactive({selected: null});
 
@@ -47,19 +48,46 @@ import Inspector from "./Inspector.vue";
     });
 
     function nodeSelected(nodeConfig) {
-        const id = nodeConfig.id;
-        selectedBoxConfig.selected = draggableConfigs[id];
+        const index = getIndexById(nodeConfig.id)
+        selectedBoxConfig.selected = draggableConfigs.value[index];
+    }
+
+    function renameObject(id, newName) {
+        const index = getIndexById(id);
+        draggableConfigs.value[index].value.name = newName;
+    }
+
+    function getIndexById(id) {
+        const match = id.match(/^config(\d+)$/);
+
+        if (!match) { return; }
+
+        return parseInt(match[1]);
     }
 </script>
 
 <template>
-    <div ref="scene" class="border-gray-500 border-2">
+    <div class="mx-auto w-full grow lg:flex xl:px-2">
+        <!-- Left sidebar & main wrapper -->
+        <div class="flex-1 xl:flex">
+            <!-- Left column area -->
+            <Hierarchy :objects="draggableConfigs" :selected-object="selectedBoxConfig.selected"
+                        @object-clicked="nodeSelected" @object-name-updated="renameObject" />
+
+            <div class="bg-gray-100 px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+                <!-- Main area -->
+                <div ref="scene" class="bg-white h-full border-gray-600 border-2">
+                    <v-stage :config="configStage">
+                        <v-layer>
+                            <DraggableNode v-model="configBox" node-name="v-rect" @selected="nodeSelected" />
+                            <DraggableNode v-model="configBox2" node-name="v-rect" @selected="nodeSelected" />
+                        </v-layer>
+                    </v-stage>
+                </div>
+            </div>
+        </div>
+
         <Inspector v-model="selectedBoxConfig.selected" />
-        <v-stage :config="configStage">
-            <v-layer>
-                <DraggableNode v-model="configBox" node-name="v-rect" @selected="nodeSelected" />
-                <DraggableNode v-model="configBox2" node-name="v-rect" @selected="nodeSelected" />
-            </v-layer>
-        </v-stage>
+        <!-- Right column area -->
     </div>
 </template>
